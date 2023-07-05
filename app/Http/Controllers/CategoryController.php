@@ -1,37 +1,42 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index () {
+
+   /**
+    * C - Create
+    * R - Read
+    * U - Update
+    * D - Delete
+    */
+    
+    /**
+     * Listare resursa R
+     */
+    public function index()
+    {
         $categories = Category::all();
         return view('categories.index', ['categories' => $categories]);
     }
 
-    public function edit ($id) {
-        $category = Category::where("id",$id)->first();
-        return view('categories.edit', ['category' => $category]);
-    }
-
-    public function update ($id, Request $request) {
-        $category = Category::where("id",$id)->first();
-
-        $category->name = $request->get('name');
-        $category->description = $request->get('description');
-
-        $category->save();
-
-        return redirect(route("categories.edit", ["id" => $id]));
-    }
-
-    public function create () {
+    /**
+     * Formular pentru creare resursa noua C
+     */
+    public function create()
+    {
         return view('categories.create');
     }
 
-    public function save (Request $request) {
+    /**
+     * Salvare resursa noua C
+     */
+    public function store(Request $request)
+    {
         $category = new Category();
 
         $category->name = $request->get('name');
@@ -42,10 +47,42 @@ class CategoryController extends Controller
         return redirect(route("categories.index"));
     }
 
-    public function delete ($id) {
-        $category = Category::where("id",$id)->first();
+    /**
+     * Aratare resursa R
+     */
+    public function show(Category $category)
+    {
+        // deocamdata nu are sens sa creem o metoda separata pentru a arata o categorie deocamdata
+        return redirect(route("categories.edit", ["category" => $category->id]));
+    }
+
+    /**
+     * Formular pentru editare resursa existenta R
+     */
+    public function edit(Category $category)
+    {
+        return view('categories.edit', ['category' => $category]);
+    }
+
+    /**
+     * Salvare resursa existenta U
+     */
+    public function update(Request $request, Category $category)
+    {
+        $category->name = $request->get('name');
+        $category->description = $request->get('description');
+
+        $category->save();
+
+        return redirect(route("categories.edit", ["category" =>  $category->id]));
+    }
+
+    /**
+     * Stergere resursa D
+     */
+    public function destroy(Category $category)
+    {
         $category->delete();
         return redirect(route("categories.index"));
-
     }
 }

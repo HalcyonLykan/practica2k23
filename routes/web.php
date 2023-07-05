@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect(route('categories.index'));
 });
 
 Route::get('/dashboard', function () {
@@ -29,11 +30,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get("/categories",[CategoryController::class, "index"])->name("categories.index");
-Route::get("/categories/edit/{id}",[CategoryController::class, "edit"])->name('categories.edit');
-Route::post("/categories/edit/{id}",[CategoryController::class, "update"])->name('categories.update');
-Route::get("/categories/create",[CategoryController::class, "create"])->name('categories.create');
-Route::post("/categories/create",[CategoryController::class, "save"])->name('categories.save');
-Route::delete("/categories/delete/{id}",[CategoryController::class, "delete"])->name('categories.delete');
+// Route::get("/categories",[CategoryController::class, "index"])->name("categories.index");
+// Route::post("/categories",[CategoryController::class, "store"])->name('categories.store');
+// Route::get("/categories/create",[CategoryController::class, "create"])->name('categories.create');
+// Route::get("/categories/{category}",[CategoryController::class, "show"])->name("categories.show");
+// Route::get("/categories/{category}",[CategoryController::class, "edit"])->name('categories.edit');
+// Route::post("/categories/{category}/edit",[CategoryController::class, "update"])->name('categories.update');
+// Route::delete("/categories/{category}",[CategoryController::class, "destroy"])->name('categories.destroy');
+
+// Pentru resurse CRUD putem scurta declararea ruterlor folosind metoda "resource". Creaza celeasi rute cu aceleasi nume ca si cele comentate mai sus
+Route::resource("categories", CategoryController::class);
+
 
 require __DIR__.'/auth.php';

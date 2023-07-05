@@ -1,14 +1,20 @@
 <x-guest-layout>
     <div class="container-fluid mx-2">
-        <h1 class="mb-4 p-3">Categories</h1>
-        <a class="btn btn-primary" href="{{route('categories.create')}}">Create</a>
-        <table class="table table-dark table-striped table-striped">
+        <div class="row">
+            <div class="col">
+                <h1 class="mb-4 p-3">Categories</h1>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-primary" href="{{route('categories.create')}}"><i class="bi bi-plus-lg"></i></a>
+            </div>
+        </div>
+        <table class="table table-striped table-striped-columns">
             <thead>
                 <tr>
-                    <th>id</th>
-                    <th>name</th>
-                    <th>description</th>
-                    <th>actions</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,8 +23,19 @@
                     <td>{{$category->id}}</td>
                     <td>{{$category->name}}</td>
                     <td>{{$category->description}}</td>
-                    <td><a class="btn btn-primary" href="{{route("categories.edit", ["id" => $category->id])}}">Edit</a></td>
-                    <td><form action="{{route("categories.delete", ["id" => $category->id])}}" method="POST">@csrf<input type="hidden" name="_method" value="DELETE"> <button type="submit" class="btn btn-danger">Delete</button></form></td>
+                    <td>
+                        <div class="row">
+                            <div class="col-auto">
+                                <a class="btn btn-primary" href="{{route("categories.edit", ["category" => $category->id])}}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <x-delete-button :deleteRoute='route("categories.destroy", ["category" => $category->id])'>
+                                </x-delete-button>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

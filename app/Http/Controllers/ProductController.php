@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,9 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-
-        return view("category.index", ['categories' => $categories]);
+        //
     }
 
     /**
@@ -22,7 +20,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view("category.create");
+        //
     }
 
     /**
@@ -36,18 +34,15 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-
-        $category = Category::where("id", $id)->findOrFail();
-
-        return view("category.show", ['category' => $category]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
         //
     }
@@ -55,7 +50,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -63,7 +58,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
         //
     }
