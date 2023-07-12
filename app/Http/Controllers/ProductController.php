@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('products.index', ['products' => $products]);
     }
 
     /**
@@ -20,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -28,7 +31,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validare
+        $valid = $request->validate(
+            [
+                "name" => "string|min:1|max:255",
+                "description" => "string|min:1|max:255",
+                "price" => "numeric|min:1|max:999",
+                "quantity" => "numeric|min:1|max:999"
+
+            ]
+        );
+
+        $product = new Product();
+        $product->name = $valid['name'];
+        $product->description = $valid["description"];
+        $product->price = $valid["price"];
+        $product->quantity = $valid["quantity"];
+
+        $product->save();
+
+        return redirect(route("products.index"));
     }
 
     /**
@@ -36,7 +58,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return redirect(route("products.index"));
     }
 
     /**
@@ -44,7 +66,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::whereDoesntHave('products', function (Builder $query) use ($product) {
+            $query->where('id', $product->id);
+        })->get();
+
+        return view("products.edit", ["product" => $product, "attachedCategories" => $product->categories, "nonAttachedCategories" => $categories]);
     }
 
     /**
@@ -52,7 +78,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->name = $request->get('name');
+        $product->description = $request->get('description');
+        $product->description = $request->get('price');
+        $product->description = $request->get('quantity');
+
+        $product->save();
+
+        return redirect(route("products.edit", ["product" => $product->id]));
     }
 
     /**
@@ -60,6 +93,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect(route("products.index"));
     }
 }

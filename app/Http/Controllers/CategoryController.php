@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -61,7 +63,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', ['category' => $category]);
+        $nonAttachedProducts = Product::whereDoesntHave('categories', function (\Illuminate\Database\Eloquent\Builder $query) use($category) {
+            $query->where('category_id', $category->id);
+        })->get();
+        return view('categories.edit', ['category' => $category, 'attachedProducts' => $category->products, "nonAttachedProducts"=> $nonAttachedProducts]);
     }
 
     /**
