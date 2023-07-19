@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <div class="container-fluid mx-2">
         <div class="row">
             <div class="col">
@@ -31,7 +31,7 @@
             </div>
         </form>
         <div class="row">
-            <div class="col mr-1">
+            <div class="col">
                 <table class="table table-striped table-striped-columns">
                     <thead>
                         <tr>
@@ -62,7 +62,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col ml-1">
+            <div class="col">
                 <table class="table table-striped table-striped-columns">
                     <thead>
                         <tr>
@@ -95,4 +95,4 @@
             </div>
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

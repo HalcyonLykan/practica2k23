@@ -41,11 +41,15 @@ Route::middleware('auth')->group(function () {
 // Route::delete("/categories/{category}",[CategoryController::class, "destroy"])->name('categories.destroy');
 
 // Pentru resurse CRUD putem scurta declararea ruterlor folosind metoda "resource". Creaza celeasi rute cu aceleasi nume ca si cele comentate mai sus
-Route::resource("categories", CategoryController::class);
-Route::resource("products", ProductController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource("categories", CategoryController::class)->only("store", "create", "edit", "update", "destroy");
+    Route::resource("products", ProductController::class)->only("store", "create", "edit", "update", "destroy");
+});
 
-Route::post('categoryproduct/{category}/{product}', [CategoryProductController::class, 'store'])->name('categoryproduct.store');
-Route::delete('categoryproduct/{category}/{product}', [CategoryProductController::class, 'destroy'])->name('categoryproduct.destroy');
+Route::resource("categories", CategoryController::class)->except("store", "create", "edit", "update", "destroy");
+Route::resource("products", ProductController::class)->except("store", "create", "edit", "update", "destroy");
 
+Route::post("/categoryproduct/{category}/{product}", [CategoryProductController::class, "store"])->name('categoryproduct.store');
+Route::delete("/categoryproduct/{category}/{product}", [CategoryProductController::class, "destroy"])->name('categoryproduct.destroy');
 
 require __DIR__.'/auth.php';

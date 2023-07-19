@@ -13,7 +13,9 @@ class Product extends Model
     //Atributele ce pot fi folosite in operatiuni in masa (creere, update, atribuire)
     protected $fillable = [
         'name',
-        "description"
+        "description",
+        "price",
+        "quantity"
     ];
 
     //Atributele ce pot fi convertite automat in alt tip de date

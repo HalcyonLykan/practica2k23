@@ -3,38 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryProduct;
-use Illuminate\Http\Request;
 
 class CategoryProductController extends Controller
 {
-      /**
-    * C - Create
-    * R - Read
-    * U - Update
-    * D - Delete
-    */
-
+    
     /**
-     * Salvare resursa noua C
+     * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $category, string $product)
+    public function store( string $category, string $product)
     {
-        if (CategoryProduct::where([['category_id', $category], ['product_id', $product]])->count() == 0)
-        {
-            $categoryProduct = new CategoryProduct(['category_id' => $category, 'product_id' => $product]);
-            $categoryProduct->save();
+        if (CategoryProduct::where([["category_id", $category], ["product_id", $product]])->count() == 0) {
+            $categoryPoduct = new CategoryProduct(["category_id" => $category, "product_id" => $product]);
+            $categoryPoduct->save();
         }
-        return redirect(route('categories.edit', ['category' => $category]));
+        return redirect(route("categories.edit", ["category" => $category]));
     }
 
-
     /**
-     * Stergere resursa D
+     * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, string $category, string $product)
+    public function destroy( string $category, string $product)
     {
         CategoryProduct::where([["category_id", $category], ["product_id", $product]])->delete();
-        return redirect(route('categories.edit', ['category' => $category]));
+        return redirect(route("categories.edit", ["category" => $category]));
     }
 }
-

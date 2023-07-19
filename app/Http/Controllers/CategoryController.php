@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,13 +12,13 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
 
-   /**
-    * C - Create
-    * R - Read
-    * U - Update
-    * D - Delete
-    */
-    
+    /**
+     * C - Create
+     * R - Read
+     * U - Update
+     * D - Delete
+     */
+
     /**
      * Listare resursa R
      */
@@ -37,7 +39,7 @@ class CategoryController extends Controller
     /**
      * Salvare resursa noua C
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
         $category = new Category();
 
@@ -63,23 +65,24 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $nonAttachedProducts = Product::whereDoesntHave('categories', function (\Illuminate\Database\Eloquent\Builder $query) use($category) {
+        $products = Product::whereDoesntHave('categories', function (Builder $query) use ($category) {
             $query->where('category_id', $category->id);
         })->get();
-        return view('categories.edit', ['category' => $category, 'attachedProducts' => $category->products, "nonAttachedProducts"=> $nonAttachedProducts]);
+
+        return view('categories.edit', ["category" => $category, 'attachedProducts' => $category->products, "nonAttachedProducts" => $products]);
     }
 
     /**
      * Salvare resursa existenta U
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->name = $request->get('name');
         $category->description = $request->get('description');
 
         $category->save();
 
-        return redirect(route("categories.edit", ["category" =>  $category->id]));
+        return redirect(route("categories.edit", ["category" => $category->id]));
     }
 
     /**

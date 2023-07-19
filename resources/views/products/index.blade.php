@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <div class="container-fluid mx-2">
         <div class="row">
             <div class="col">
@@ -48,4 +48,4 @@
             </tbody>
         </table>
     </div>
-</x-guest-layout>
+</x-app-layout>
