@@ -15,9 +15,18 @@ class ProductController extends Controller
     /**
      * Listare resursa R
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::query();
+        $where = [];
+
+        if ($request->has("search") && $search = $request->get("search")) {
+            $where[]= ["name", "like", "%" . $search . "%"];
+        }
+
+        $products->where($where);
+        $products = $products->paginate(15);
+        
         return view('products.index', ['products' => $products]);
     }
 
@@ -72,9 +81,9 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        
 
-        $product->name =  $request->name;
+
+        $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
