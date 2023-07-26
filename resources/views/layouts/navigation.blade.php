@@ -12,8 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                        {{ __('Products') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -53,8 +59,13 @@
                 </x-dropdown>
             </div>
             @else
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <a href="{{ route('login') }}" class="btn btn-success">LOGIN</a>
+            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                {{-- <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <a href="{{ route('login') }}" class="btn btn-success">LOGIN</a>
+                </div> --}}
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                Login
+                </x-nav-link>
             </div>
             @endif
 
@@ -104,8 +115,10 @@
             </div>
         </div>
         @else
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <a href="{{ route('login') }}" class="btn btn-success">LOGIN</a>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('login')">
+                {{ __('Login') }}
+            </x-responsive-nav-link>
         </div>
         @endif
     </div>

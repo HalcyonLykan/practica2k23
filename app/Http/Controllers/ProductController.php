@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,23 +32,14 @@ class ProductController extends Controller
     /**
      * Salvare resursa noua C
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        $valid = $request->validate(
-            [
-                "name" => "string|min:1|max:255",
-                "description" => "string|min:1|max:255",
-                "price" => "numeric|min:1|max:999",
-                "quantity" => "numeric|min:1|max:999"
-            ]
-        );
-
         $product = new Product();
 
-        $product->name = $valid["name"];
-        $product->description = $valid["description"];
-        $product->price = $valid["price"];
-        $product->quantity = $valid["quantity"];
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
 
         $product->save();
 
@@ -77,21 +70,14 @@ class ProductController extends Controller
     /**
      * Salvare resursa existenta U
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $valid = $request->validate(
-            [
-                "name" => "string|min:1|max:255",
-                "description" => "string|min:1|max:255",
-                "price" => "numeric|min:1|max:999",
-                "quantity" => "numeric|min:1|max:999"
-            ]
-        );
+        
 
-        $product->name = $valid["name"];
-        $product->description = $valid["description"];
-        $product->price = $valid["price"];
-        $product->quantity = $valid["quantity"];
+        $product->name =  $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
 
         $product->save();
 

@@ -1,15 +1,16 @@
 <x-app-layout>
-    <div class="container-fluid mx-2">
+    <div class="container mx-auto">
+        <div class="mx-2 mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg container">
+    
         <div class="row">
             <div class="col">
                 <h1 class="mb-4 p-3">Products</h1>
             </div>
+            @auth
             <div class="col-auto">
                 <a class="btn btn-primary" href="{{route('products.create')}}"><i class="bi bi-plus-lg"></i></a>
             </div>
-            <div class="col-auto">
-                <a class="btn btn-primary" href="{{route('categories.index')}}">Categories</i></a>
-            </div>
+            @endauth
         </div>
         <table class="table table-striped table-striped-columns">
             <thead>
@@ -19,7 +20,9 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    @auth
                     <th>Actions</th>
+                    @endauth
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +33,7 @@
                     <td>{{$product->description}}</td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->quantity}}</td>
+                    @auth
                     <td>
                         <div class="row">
                             <div class="col-auto">
@@ -43,9 +47,11 @@
                             </div>
                         </div>
                     </td>
+                    @endauth
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+</div>
 </x-app-layout>
