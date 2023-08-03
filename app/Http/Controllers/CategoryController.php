@@ -22,9 +22,33 @@ class CategoryController extends Controller
     /**
      * Listare resursa R
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::query();
+
+        $where = [];
+
+        if ($request->has('search') && $request->get('search')) {
+            $where[] = ['name', 'like', "%" . $request->get('search') . "%"];
+        }
+
+        if (count($where))
+            $categories->where($where);
+
+        if (
+            ($request->has('orderBy') && $request->get('orderBy'))
+            && ($request->has('orderByDirection') && $request->get('orderByDirection'))
+        ) {
+            $categories->orderBy($request->get('orderBy'), $request->get('orderByDirection'));
+        }
+
+        $categories = $categories->paginate(15);
+
+        foreach ($request->collect() as $key => $param) {
+            if ($key != "page")
+                $categories->appends($key, $param);
+        }
+
         return view('categories.index', ['categories' => $categories]);
     }
 

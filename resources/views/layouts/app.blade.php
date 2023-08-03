@@ -23,6 +23,13 @@
 
             <!-- Page Heading -->
             @if (isset($header))
+            {{-- 
+                blade directives allow us to quickly and conveniently use php code inside blade templates using blade directives and moustaches ( " {{}} " )
+            
+                directivele blade perimit utilizarea codului php in interiorul fisierelor blade intr-un mod simplu si usor
+                De asemenea pentru se pot folosi "mustatile" ( " {{}} " )
+
+            --}}
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
@@ -32,7 +39,15 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+                    <div class="mx-2 mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg container">
+                        {{ $slot }}
+                        {{-- 
+                            when using blades as layouts they automatically recieve a $slot variable whcih contains whatever is between the starting and closing <x-> tags of the layout    
+                            Fisierele blade folosite ca layout sau drept componente primesc automat o variabila $slot care contine orice este intre tagurile <x-> ale componentei
+                        --}}
+                    </div>
+                </div>
             </main>
         </div>
     </body>

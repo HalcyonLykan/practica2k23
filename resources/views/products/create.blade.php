@@ -5,7 +5,7 @@
                 <h1 class="mb-4 p-3">Products</h1>
             </div>
         </div>
-        <form action="{{ route('products.store') }}" method="POST">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="nameInput" class="form-label">Name</label>
@@ -22,6 +22,10 @@
             <div class="mb-3">
                 <label for="quantityInput" class="form-label">Qty</label>
                 <input type="number" class="form-control" id="quantityInput" name="quantity">
+            </div>
+            <div class="mb-3">
+                <label for="productImages" class="form-label">Product images</label>
+                <input class="form-control" type="file" multiple id="productImages" name="productImages[]">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             @if ($errors->any())

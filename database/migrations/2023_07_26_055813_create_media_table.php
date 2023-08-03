@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_product', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("product_id");
-            $table->bigInteger("category_id");
+            $table->string('original_file_name');
+            $table->string('path');
+            $table->string('original_extension');
+            $table->bigInteger('product_id');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_product');
+        Schema::dropIfExists('media');
     }
 };

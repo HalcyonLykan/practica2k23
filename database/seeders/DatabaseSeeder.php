@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        //Database Seeders can call other seeders
+        //Clasele Seeder pot apela alte clase seeder
         $this->call([
             UserSeeder::class,
             CategorySeeder::class,

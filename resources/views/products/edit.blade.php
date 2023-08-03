@@ -5,7 +5,7 @@
                 <h1 class="mb-4 p-3">Products</h1>
             </div>
         </div>
-        <form action="{{ route('products.update', ['product' => $product->id]) }}" method="POST">
+        <form action="{{ route('products.update', ['product' => $product->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="mb-3">
@@ -25,6 +25,10 @@
                 <label for="quantityInput" class="form-label">Qty</label>
                 <input type="number" class="form-control" id="quantityInput" name="quantity"
                     value="{{ $product->quantity }}">
+            </div>
+            <div class="mb-3">
+                <label for="productImages" class="form-label">Product images</label>
+                <input class="form-control" type="file" multiple id="productImages" name="productImages[]">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             @if ($errors->any())
@@ -101,5 +105,22 @@
                 </table>
             </div>
         </div>
+        @if ($product->media)
+            <div class="row">
+                @foreach ($product->media as $media)
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card">
+                            <div class="card text-bg-dark">
+                                <img src="{{env("APP_URL", "http://localhost")}}{{ Storage::url($media->path) }}" class="card-img">
+                                <div class="card-img-overlay">
+                                    <x-delete-button :deleteRoute="route('media.destroy', ['media' => $media->id])">
+                                    </x-delete-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </x-guest-layout>

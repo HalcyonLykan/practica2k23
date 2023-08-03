@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProductFactory extends Factory
 {
+    //Factory classes generate model instances
+    //Clasele Factory genereaza instante de model
+
     /**
      * Define the model's default state.
      *
@@ -16,6 +19,8 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        //The values assigned to generated class instance properties
+        //Valorile atribuite propietatilor instantelor de clasa generate
         return [
             'name' => fake()->words(rand(1, 3), true),
             'description' => fake()->words(rand(3, 10), true),
